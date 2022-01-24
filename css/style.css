@@ -1,0 +1,54 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+
+h2 {
+  size: heavy;
+  font-weight: bold;
+}
+
+section {
+  padding: 1rem;
+}
+.fullpage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #ccc;
+  text-align: center;
+}
+.fullpage .content h2 {
+  font-weight: 100;
+  font-size: 5rem;
+}
+.fullpage .content h3 {
+  font-weight: 50;
+  font-size: 3rem;
+}
+
+.row {
+  display: flex;
+}
+.col-left,
+.col-right {
+  flex: 1;
+}
+.col-middle {
+  flex: 2.5;
+}
+
+#mapid {
+  width: 50vw;
+  height: 50vw;
+  position: relative;
+}
+
+.circle {
+  border-radius: 1%;
+}
