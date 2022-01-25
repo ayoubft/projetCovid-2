@@ -17,6 +17,7 @@ function addBM() {
 addBM();
 
 var day;
+var geojson = L.geoJson(provincesBK);
 
 document.getElementById("haha").onclick = function changeContent() {
   day = document.getElementsByClassName("active").item(0).innerText;
@@ -25,20 +26,27 @@ document.getElementById("haha").onclick = function changeContent() {
   });
   addBM();
   L.geoJson(provincesBK, { style: style }).addTo(map);
+  var geojson = L.geoJson(provincesBK);
+  geojson = L.geoJson(provincesBK, {
+    style: style,
+    onEachFeature: onEachFeature,
+  }).addTo(map);
+  info.addTo(map);
+  legend.addTo(map);
 };
 
 function getColor(d) {
   return d > 24
-    ? "#edf8fb"
+    ? "#810f7c"
     : d > 19
-    ? "#bfd3e6"
-    : d > 17
-    ? "#9ebcda"
-    : d > 15
-    ? "#8c96c6"
-    : d > 12
     ? "#8856a7"
-    : "#810f7c";
+    : d > 17
+    ? "#8c96c6"
+    : d > 15
+    ? "#9ebcda"
+    : d > 12
+    ? "#bfd3e6"
+    : "#edf8fb";
 }
 
 function style(feature) {
@@ -54,129 +62,85 @@ function style(feature) {
 
 L.geoJson(provincesBK, { style: style }).addTo(map);
 
-// data = {
-//   type: "FeatureCollection",
-//   features: [
-//     {
-//       type: "Feature",
-//       properties: {
-//         title: "Day 1",
-//         content: "This is where some people moved to.",
-//       },
-//       geometry: {
-//         type: "Point",
-//         coordinates: [-73.7949, 40.7282, 1],
-//       },
-//     },
-//     {
-//       type: "Feature",
-//       properties: {
-//         title: "The Next Day",
-//         content: "This is where some people grooved to.",
-//       },
-//       geometry: {
-//         type: "Point",
-//         coordinates: [-74.3838, 40.9148, 1],
-//       },
-//     },
-//     {
-//       type: "Feature",
-//       properties: {
-//         title: "Amazing Event",
-//         content: "This is where they went to have fun.",
-//       },
-//       geometry: {
-//         type: "Point",
-//         coordinates: [4.899431, 52.379189, 1],
-//       },
-//     },
-//     {
-//       type: "Feature",
-//       properties: {
-//         title: "1776",
-//         content: "This where they went when the revolution had begun.",
-//       },
-//       geometry: {
-//         type: "Point",
-//         coordinates: [-71.3489484, 42.4603719, 1],
-//       },
-//     },
-//     {
-//       type: "Feature",
-//       properties: {
-//         title: "1776",
-//         content: "This where they went when the revolution had begun.",
-//       },
-//       geometry: {
-//         type: "Point",
-//         coordinates: [-71.2272, 42.4473, 1],
-//       },
-//     },
-//     {
-//       type: "Feature",
-//       properties: {
-//         title: "1984",
-//         content: "So they all came here...and disappeared without a trace!",
-//       },
-//       geometry: {
-//         type: "Point",
-//         coordinates: [-0.118092, 51.509865, 1],
-//       },
-//     },
-//     {
-//       type: "Feature",
-//       properties: {
-//         title: "12/22/63",
-//         content: "Now, this can be quite the scary place.",
-//       },
-//       geometry: {
-//         type: "Point",
-//         coordinates: [-70.2553259, 43.661471, 1],
-//       },
-//     },
-//   ],
-// };
+function highlightFeature(e) {
+  var layer = e.target;
 
-// getDataAddMarkers = function ({ label, value, map, exclamation }) {
-//   map.eachLayer(function (layer) {
-//     if (layer instanceof L.Marker) {
-//       map.removeLayer(layer);
-//     }
-//   });
+  layer.setStyle({
+    weight: 5,
+    color: "#666",
+    dashArray: "",
+    fillOpacity: 0.7,
+  });
 
-//   filteredData = provincesBK.features.filter(function (i, n) {
-//     return i.properties.OBJECTID === label;
-//   });
+  if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+    layer.bringToFront();
+  }
+  info.update(layer.feature.properties);
+}
 
-//   var markerArray = [];
-//   L.geoJson(filteredData, {
-//     onEachFeature: function onEachFeature(feature, layer) {
-//       content = `${exclamation} <br> ${
-//         feature.properties.content
-//       } <br> (${Math.round((value / 6) * 100)}% done with story)`;
-//       var popup = L.popup().setContent(content);
-//       layer.bindPopup(popup);
-//       markerArray.push(layer);
-//     },
-//   }).addTo(map);
+function resetHighlight(e) {
+  geojson.resetStyle(e.target);
+  info.update();
+}
 
-//   var markerGroup = L.featureGroup(markerArray);
-//   map.fitBounds(markerGroup.getBounds()).setZoom(12);
-// };
+function zoomToFeature(e) {
+  map.fitBounds(e.target.getBounds());
+}
 
-// L.control
-//   .timelineSlider({
-//     timelineItems: [
-//       "33",
-//       "Day 1",
-//       "The Next Day",
-//       "Amazing Event",
-//       "1776",
-//       "12/22/63",
-//       "1984",
-//       "Day 1",
-//     ],
-//     changeMap: getDataAddMarkers,
-//     extraChangeMapParams: { exclamation: "Hello World!" },
-//   })
-//   .addTo(map);
+function onEachFeature(feature, layer) {
+  layer.on({
+    mouseover: highlightFeature,
+    mouseout: resetHighlight,
+    click: zoomToFeature,
+  });
+}
+
+geojson = L.geoJson(provincesBK, {
+  style: style,
+  onEachFeature: onEachFeature,
+}).addTo(map);
+
+var info = L.control();
+
+info.onAdd = function (map) {
+  this._div = L.DomUtil.create("div", "info"); // create a div with a class "info"
+  this.update();
+  return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+info.update = function (props) {
+  this._div.innerHTML =
+    "<h4>Cases</h4>" +
+    (props
+      ? "<b>" +
+        props.Nom_Province +
+        "</b><br />" +
+        props[day] +
+        " cas confirmés </sup>"
+      : "Hover over a state");
+};
+
+info.addTo(map);
+
+var legend = L.control({ position: "bottomright" });
+
+legend.onAdd = function (map) {
+  var div = L.DomUtil.create("div", "info legend"),
+    grades = [8, 10, 12, 14, 16, 18, 20, 24],
+    labels = [];
+
+  // loop through our density intervals and generate a label with a colored square for each interval
+  for (var i = 0; i < grades.length; i++) {
+    div.innerHTML +=
+      '<i style="background:' +
+      getColor(grades[i] + 1) +
+      '"></i> ' +
+      grades[i] +
+      (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
+  }
+
+  return div;
+};
+
+legend.addTo(map);
