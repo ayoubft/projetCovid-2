@@ -1,4 +1,4 @@
-var map = L.map("mapid").setView([32.4937, -6.2830], 8.5);
+var map = L.map("mapid").setView([32.4937, -6.283], 8);
 
 // Google Earth Hybrid basemap
 // L.tileLayer("http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}&s=Ga", {
@@ -7,10 +7,14 @@ var map = L.map("mapid").setView([32.4937, -6.2830], 8.5);
 // }).addTo(map);
 
 // OpenStreetMap basemap
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution:
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-}).addTo(map);
+function addBM() {
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
+}
+
+addBM();
 
 var day;
 
@@ -19,32 +23,36 @@ document.getElementById("haha").onclick = function changeContent() {
   map.eachLayer(function (layer) {
     map.removeLayer(layer);
   });
-  L.geoJson(provincesBK, {style: style}).addTo(map);
+  addBM();
+  L.geoJson(provincesBK, { style: style }).addTo(map);
 };
 
 function getColor(d) {
-  return d > 1000 ? '#800026' :
-         d > 500  ? '#BD0026' :
-         d > 200  ? '#E31A1C' :
-         d > 100  ? '#FC4E2A' :
-         d > 50   ? '#FD8D3C' :
-         d > 20   ? '#FEB24C' :
-         d > 10   ? '#FED976' :
-                    '#FFEDA0';
+  return d > 24
+    ? "#edf8fb"
+    : d > 19
+    ? "#bfd3e6"
+    : d > 17
+    ? "#9ebcda"
+    : d > 15
+    ? "#8c96c6"
+    : d > 12
+    ? "#8856a7"
+    : "#810f7c";
 }
 
 function style(feature) {
   return {
-      fillColor: getColor(feature.properties[day]),
-      weight: 2,
-      opacity: 1,
-      color: 'white',
-      dashArray: '3',
-      fillOpacity: 0.7
+    fillColor: getColor(feature.properties[day]),
+    weight: 2,
+    opacity: 1,
+    color: "gray",
+    dashArray: "3",
+    fillOpacity: 0.7,
   };
 }
 
-L.geoJson(provincesBK, {style: style}).addTo(map);
+L.geoJson(provincesBK, { style: style }).addTo(map);
 
 // data = {
 //   type: "FeatureCollection",
