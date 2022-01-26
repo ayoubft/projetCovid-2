@@ -111,14 +111,10 @@ info.onAdd = function (map) {
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
   this._div.innerHTML =
-    "<h4>Cases</h4>" +
+    "<h4>Covid-19 (Omicron?)</h4>" +
     (props
-      ? "<b>" +
-        props.Nom_Province +
-        "</b><br />" +
-        props[day] +
-        " cas confirmés </sup>"
-      : "Hover over a state");
+      ? `<b>${props.Nom_Province}</b><br />${props[day]} Confirmed Cases </sup>`
+      : "Hover over a province!");
 };
 
 info.addTo(map);
