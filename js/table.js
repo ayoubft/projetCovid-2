@@ -37,7 +37,7 @@ function tableFromJson() {
 
   // Create table header row using the extracted headers above.
   var tr = table.insertRow(-1); // table row.
-
+  table.id = "table-infos"
   for (var i = 0; i < col.length; i++) {
     var th = document.createElement("th"); // table header.
     th.innerHTML = col[i];
@@ -58,4 +58,9 @@ function tableFromJson() {
   var divShowData = document.getElementById("showData");
   divShowData.innerHTML = "";
   divShowData.appendChild(table);
+}
+
+function delTable() {
+  var element = document.getElementById("table-infos");
+  element.remove();
 }
