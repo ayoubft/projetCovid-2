@@ -113,7 +113,7 @@ info.update = function (props) {
   this._div.innerHTML =
     "<h4>Covid-19 (Omicron?)</h4>" +
     (props
-      ? `<b>${props.Nom_Province}</b><br />${props[day]} Confirmed Cases </sup>`
+      ? `${day}<br /><b>${props.Nom_Province}</b><br />${props[day]} Confirmed Cases </sup>`
       : "Hover over a province!");
 };
 
