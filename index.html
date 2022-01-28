@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,57 +11,56 @@
     <link rel="stylesheet" href="css/slider.css" />
     <link rel="stylesheet" href="css/table.css" />
     <script src="js/leaflet.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="js/leaflet-timeline-slider.js"></script>
-  </head>
+</head>
 
-  <body>
+<body>
     <section class="fullpage">
-      <div class="content">
-        <h2>Tableau de bord pour visualiser le développement du COVID</h2>
-        <h1>Région Béni-Mellal Khénifra</h1>
-        <a href="#main">Défiler vers le bas</a>
-      </div>
+        <div class="content">
+            <h2>Tableau de bord pour visualiser le développement du COVID</h2>
+            <h1>Région Béni-Mellal Khénifra</h1>
+            <a href="#main">Défiler vers le bas</a>
+        </div>
     </section>
     <div class="row" id="main">
-      <div class="col-left">
-        <h1>Contents</h1>
-      </div>
-      <div class="col-middle">
-        <h1>MAP</h1>
-        <div id="mapid" class="circle"></div>
-        <div id="haha">
-          <h1>Choose the date</h1>
-          <div class="range">
-            <input type="range" min="1" max="7" steps="1" value="1" />
-          </div>
-          <ul class="range-labels">
-            <li class="active selected">Day 0</li>
-            <li>Day 1</li>
-            <li>Day 2</li>
-            <li>Day 3</li>
-            <li>Day 4</li>
-            <li>Day 5</li>
-            <li>Day 6</li>
-          </ul>
-          <br /><br /><br /><br /><br /><br />
+        <div class="col-left">
+            <h1>Contents</h1>
         </div>
-      </div>
-      <div class="col-right">
-        <h1>Infos</h1>
-        <h3>Click to get infos of choosed date</h3>
-        <input type="button" onclick="tableFromJson()" value="Show me" />
-        <p id="showData"></p>
-        <p id="msg"></p>
-      </div>
+        <div class="col-middle">
+            <div id="haha">
+                <h1>Choose the date</h1>
+                <div class="range">
+                    <input type="range" min="1" max="7" steps="1" value="1" />
+                </div>
+                <ul class="range-labels">
+                    <li class="active selected">16/12/21</li>
+                    <li>17/12/21</li>
+                    <li>18/12/21</li>
+                    <li>19/12/21</li>
+                    <li>20/12/21</li>
+                    <li>21/12/21</li>
+                    <li>22/12/21</li>
+                </ul>
+            </div>
+            <h1>MAP</h1>
+            <div id="mapid" class="circle"></div>
+            <br /><br /><br /><br /><br /><br /><br />
+        </div>
+        <div class="col-right">
+            <h1>Infos</h1>
+            <h3>Click to get infos of choosed date</h3>
+            <input type="button" onclick="tableFromJson()" value="Show 👁" />
+            <input type="button" onclick="delTable()" value="Hide 😑" />
+            <p id="showData"></p>
+            <p id="msg"></p>
+        </div>
     </div>
     <script src="js/provincesBK.js"></script>
     <script src="js/slider.js"></script>
     <script src="js/script.js"></script>
     <script src="js/table.js"></script>
-  </body>
+</body>
+
 </html>
