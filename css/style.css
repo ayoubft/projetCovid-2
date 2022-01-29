@@ -37,9 +37,12 @@ section {
 .row {
   display: flex;
 }
-.col-left,
+.col-left {
+  flex: 0.85;
+  margin: 10px;
+}
 .col-right {
-  flex: 1;
+  flex: 1.25;
 }
 .col-middle {
   flex: 2.5;
