@@ -12,6 +12,11 @@ h2 {
   font-weight: bold;
 }
 
+a {
+  font-size: large;
+  font-weight: bold;
+}
+
 section {
   padding: 1rem;
 }
