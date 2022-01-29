@@ -87,3 +87,6 @@ section {
   margin-right: 8px;
   opacity: 0.7;
 }
+.inline-block {
+  display: inline-block;
+}
