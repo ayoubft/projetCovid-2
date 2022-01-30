@@ -19,6 +19,8 @@ addBM();
 var day;
 var geojson = L.geoJson(provincesBK);
 
+map.fitBounds(geojson.getBounds());
+
 document.getElementById("haha").onclick = function changeContent() {
   day = document.getElementsByClassName("active").item(0).innerText;
   map.eachLayer(function (layer) {
@@ -33,6 +35,7 @@ document.getElementById("haha").onclick = function changeContent() {
   }).addTo(map);
   info.addTo(map);
   legend.addTo(map);
+  map.fitBounds(geojson.getBounds());
 };
 
 function getColor(d) {
